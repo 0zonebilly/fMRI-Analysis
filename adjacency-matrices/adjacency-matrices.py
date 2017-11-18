@@ -14,9 +14,6 @@ All other libraries are imported within the functions.
 
 I haven't tested these in Python 2.7 -- they may or may not work. 
 
-TO DO:
-    Implement sliding window correlational analysis. 
-
 """
 
 ########################################################
@@ -81,6 +78,53 @@ def sig_adj_mat(dataset, alpha):
     adjacency = np.array(adjacency)
     return adjacency
 
+#Sliding window method of generating adjacency matrices
+def sliding_adj_mat(dataset, window, TR, name):
+    from scipy import stats
+    k = window // TR
+    m = 0
+    n = 0
+    while n <= len(dataset):
+        n = m + k
+        adjacency = []
+        subset = dataset[m:n]
+        subset_T = subset.T
+        length = len(subset_T)
+        for i in range(length):
+            i_list = []
+            for j in range(length):
+                corr = stats.pearsonr(subset_T[i], subset_T[j])
+                i_list.append(corr[0])
+            adjacency.append(i_list)
+        adjacency = np.array(adjacency)
+        np.save(name + 'adj_mat' + str(m), adjacency)
+        m += 1
+        
+#Sliding window w/ significance filter 
+def sliding_sig_mat(dataset, alpha, window, TR, name):
+    from scipy import stats 
+    k = window // TR
+    m = 0
+    n = 0
+    while n <= len(dataset):
+        n = m+k
+        adjacency = []
+        subset = dataset[m:n]
+        subset_T = subset.T
+        length = len(subset_T)
+        for i in range(length):
+            i_list = []
+            for j in range(length):
+                corr = stats.pearsonr(subset_T[i], subset_T[j])
+                if corr[1] < alpha:
+                    i_list.append(corr[0])
+                else:
+                    i_list.append(0)
+            adjacency.append(i_list)
+        adjacency = np.array(adjacency)
+        np.save(name + 'adj_mat' + str(m), adjacency)
+        m += 1
+
 #Turns all the diagonal 1s into 0s.
     #Does not output a new matrix - it modifies the input directly. 
 def diagonal_zeros(dataset):
@@ -113,30 +157,31 @@ def binarize_mat(dataset, keep_neg):
 #Example workflow
 #Returns binary adjacency matrices of only significant correlations (p<0.01), thresholded at 90%
 
-'''
-import numpy as np
+import os
 
-full_mat = get_mat(file)
+for file in os.listdir('/data/tfv21/ds133_R1.0.0/full_modafinil/roi-timeseries'):
+    if file.endswith('.mat'):
         
-dataset = mat_to_npy(full_mat, x, y)
+            name = file[4:15]
         
-condition1 = seperate_conditions(dataset, 0, a)
-condition2 = seperate_conditions(dataset, a, b)
-...(repeat for all conditions)...
-conditionN = seperate_conditions(dataset, m, n)
+            full_mat = get_mat(file)
+        
+            dataset = mat_to_npy(full_mat, 3, 135)
+        
+            condition000 = seperate_conditions(dataset, 0, 145)
+            condition001 = seperate_conditions(dataset, 145, 291)
 
-condition_list = [condition1, condition2, ..., conditionN]
-str_condition_list = ['condition1', 'condition2', ..., 'conditionN']
 
-length = len(condition_list)
+            condition_list = [condition000, condition001]
+            str_condition_list = ['condition000', 'condition001']
+            length = len(condition_list)
         
-for i in range(length):
-    adj_mat = sig_adj_mat(condition_list[i], 0.01)
-    adj_mat = diagonal_zeros(adj_mat)
-    adj_mat = threshold(adj_mat, 90)
-    adj_mat = binarize_mat(adj_mat, keep_neg = False)
-    np.save(str_condition_list[i] + 'adj_mat', adj_mat)
-'''
+            for i in range(length):
+                adj_mat = sig_adj_mat(condition_list[i], 0.01)
+                adj_mat = diagonal_zeros(adj_mat)
+                adj_mat = threshold(adj_mat, 90)
+                adj_mat = binarize_mat(adj_mat, keep_neg = False)
+                np.save(name + '_' + str_condition_list[i] + '_adj_mat', adj_mat)
 
 #The matrices are saved as .npy files in the working directory.
 #They should be ready for further analysis.
