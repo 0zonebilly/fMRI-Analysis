@@ -5,8 +5,8 @@ Created on Fri Nov 17 21:08:08 2017
 
 @author: Thomas Varley
 
-LZ Complexity code based on work by Lilian Besson.
-PCI normalization factor based on work by Leonardo Barbarosa
+LZ Complexity code based on work by Lilian Besson @ CentraleSupélec, Rennes, France
+PCI normalization factor based on work by Leonardo Barbarosa @ University of Wisconsin-Madison
 
 Python implementation of the Perturbational Complexity Index
 Casali et al., "A Theoretically Based Index of Consciousness Independent of Sensory Processing and Behavior" Science Translational Medicine (August 14th, 2013)
