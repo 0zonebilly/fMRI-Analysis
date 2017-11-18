@@ -156,7 +156,7 @@ def binarize_mat(dataset, keep_neg):
 ########################################################
 #Example workflow
 #Returns binary adjacency matrices of only significant correlations (p<0.01), thresholded at 90%
-
+'''
 import os
 
 for file in os.listdir('/data/tfv21/ds133_R1.0.0/full_modafinil/roi-timeseries'):
@@ -182,6 +182,6 @@ for file in os.listdir('/data/tfv21/ds133_R1.0.0/full_modafinil/roi-timeseries')
                 adj_mat = threshold(adj_mat, 90)
                 adj_mat = binarize_mat(adj_mat, keep_neg = False)
                 np.save(name + '_' + str_condition_list[i] + '_adj_mat', adj_mat)
-
+'''
 #The matrices are saved as .npy files in the working directory.
 #They should be ready for further analysis.
