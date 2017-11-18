@@ -1,4 +1,7 @@
-reated on Fri Nov 17 21:08:08 2017
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Nov 17 21:08:08 2017
 
 @author: Thomas Varley
 
