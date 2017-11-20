@@ -16,6 +16,7 @@ __Nodal Entropy__
 Based on work by Ioannis Pappas in my lab at Cambridge and independently dervied by Viol et al., this gives a measure of the structural entropy of a brain functional connectivity network. A distribution of the degrees of every node in a graph is used to calculate a measure of entropy for the network. Used as a proxy measure for complexity. 
 
 __Point Process Analysis__
+
 Described by Tagliazucci et al., this system binarizes a neural timeseries, extracting only those events which surpass a given threashold (in this case, 1 standard deviation). This very efficiently compresses a network. The library also has functions for returning the rate of events, as well as the average interval between events. 
 
 ### Pipeline Code
