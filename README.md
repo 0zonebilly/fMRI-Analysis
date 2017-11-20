@@ -3,6 +3,8 @@ These are projects from my work at the University of Cambridge, in the Cognition
 
 All of these projects should be considered free and open-source, unless otherwise explicitly mentioned. Authorship is denoted within each file itself. While files are free to be downloaded, modified, or used, please maintain the credits and the original date of creation in all subsequent instances. 
 
+TO DO: Poincare/return maps.
+
 ## Projects
 
 __Lempel-Ziv Compressability & Perturbational Complexity Index__
@@ -12,6 +14,9 @@ Based on work by Casali et al., this algorithm uses the classic Lempel-Ziv compr
 __Nodal Entropy__
 
 Based on work by Ioannis Pappas in my lab at Cambridge and independently dervied by Viol et al., this gives a measure of the structural entropy of a brain functional connectivity network. A distribution of the degrees of every node in a graph is used to calculate a measure of entropy for the network. Used as a proxy measure for complexity. 
+
+__Point Process Analysis__
+Described by Tagliazucci et al., this system binarizes a neural timeseries, extracting only those events which surpass a given threashold (in this case, 1 standard deviation). This very efficiently compresses a network. The library also has functions for returning the rate of events, as well as the average interval between events. 
 
 ### Pipeline Code
 
