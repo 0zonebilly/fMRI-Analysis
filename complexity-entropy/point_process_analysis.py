@@ -91,32 +91,8 @@ def interval(timeseries, TR):
     return intervals
 
 #Creates a 2D Poincare return map of the binary timeseries
-def poincare_return_2D(timeseries):
+def poincare_return_2D(timeseries, TR):
     import matplotlib as plt
-    x_axis = interval(timeseries)
-    y_axis = x_axis[1:]
-    x_axis = x_axis[:-1]
-    
-    plt.pyplot.scatter(x_axis, y_axis)
-
-#Creates a 3D Poincare return map of the binary timeseries
-def poincare_return_3D(timeseries):
-    from matplotlib import pyplot
-    from mpl_toolkits.mplot3d import Axes3D
-    
-    x_axis = interval(timeseries)
-    y_axis = x_axis[1:-1]
-    z_axis = x_axis[2:]
-    x_axis = x_axis[:-2]
-    
-    fig = pyplot.figure()
-    ax = Axes3D(fig)
-    
-    ax.scatter(x_axis, y_axis, z_axis)
-    pyplot.show()
-
-#Returns the interval, in seconds, between one event and the next
-def interval(timeseries, TR):
     length = len(timeseries)
     intervals = []
     i = 0
@@ -130,24 +106,31 @@ def interval(timeseries, TR):
         elif timeseries[i] == 0:
             counter += 1
             i += 1
-    intervals = [TR*x for x in intervals]
-    return intervals
-
-#Creates a 2D Poincare return map of the binary timeseries
-def poincare_return_2D(timeseries):
-    import matplotlib as plt
-    x_axis = interval(timeseries)
+    x_axis = [TR*x for x in intervals]
     y_axis = x_axis[1:]
     x_axis = x_axis[:-1]
     
     plt.pyplot.scatter(x_axis, y_axis)
 
 #Creates a 3D Poincare return map of the binary timeseries
-def poincare_return_3D(timeseries):
+def poincare_return_3D(timeseries, TR):
     from matplotlib import pyplot
     from mpl_toolkits.mplot3d import Axes3D
     
-    x_axis = interval(timeseries)
+    length = len(timeseries)
+    intervals = []
+    i = 0
+    counter = 0
+    
+    while i < length:
+        if timeseries[i] == 1:
+            intervals.append(counter)
+            counter = 0
+            i += 1
+        elif timeseries[i] == 0:
+            counter += 1
+            i += 1
+    x_axis = [TR*x for x in intervals]
     y_axis = x_axis[1:-1]
     z_axis = x_axis[2:]
     x_axis = x_axis[:-2]
@@ -157,7 +140,3 @@ def poincare_return_3D(timeseries):
     
     ax.scatter(x_axis, y_axis, z_axis)
     pyplot.show()
-            
-    
-    
-    
