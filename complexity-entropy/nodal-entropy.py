@@ -46,7 +46,13 @@ def hist(source):
     
 #Calculates entropy of the nodal degrees
 def entropy(source):
-    length, histogram = hist(source)
+    histogram = {}
+    length = 0
+    for entry in source:
+        length += 1
+        if entry not in histogram:
+            histogram[entry] = 0
+        histogram[entry] += 1
     e_list = []
     for value in histogram.values():
         p = value / length
@@ -72,7 +78,7 @@ def nodal_entropy(graph):
 #Create the vector of entropies for all Condition Networks
 
 #Importing the file and processing the adjacency matrix
-
+'''
 entropies = []
 
 for file in os.listdir("path/to/directory/"):
@@ -80,3 +86,4 @@ for file in os.listdir("path/to/directory/"):
         dataset = np.load(file)
         ent = matrix_nodal_entropy(dataset, int)
         entropies.append(ent)
+'''
