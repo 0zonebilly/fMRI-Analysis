@@ -1,9 +1,7 @@
-# fMRI-Analysis
+﻿# fMRI-Analysis
 These are projects from my work at the University of Cambridge, in the Cognition and Consciousness Group.
 
 All of these projects should be considered free and open-source, unless otherwise explicitly mentioned. Authorship is denoted within each file itself. While files are free to be downloaded, modified, or used, please maintain the credits and the original date of creation in all subsequent instances. 
-
-TO DO: Poincare/return maps.
 
 ## Projects
 
@@ -18,6 +16,8 @@ Based on work by Ioannis Pappas in my lab at Cambridge and independently dervied
 __Point Process Analysis__
 
 Described by Tagliazucci et al., this system binarizes a neural timeseries, extracting only those events which surpass a given threashold (in this case, 1 standard deviation). This very efficiently compresses a network. The library also has functions for returning the rate of events, as well as the average interval between events. 
+
+This analysis lends itself to the formation of Poincare return maps, which can be implemented in this library. 
 
 ### Pipeline Code
 
