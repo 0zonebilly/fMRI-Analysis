@@ -17,40 +17,25 @@ This will only work in Python 3+
 import numpy as np
 
 #Returns the Lempel-Ziv complexity of a binary string. 
-def lz_string(binary_string):
-    u = 0
-    v = 1
-    w = 1
-    v_max = 1
-    length = len(binary_string)
-    complexity = 1
-    while True:
-        if binary_string[u + v - 1] == binary_string[w + v - 1]:
-            v += 1
-            if w + v >= length:
-                complexity += 1
-                break
-        else:
-            if v > v_max:
-                v_max = v
-            u += 1
-            if u == w:
-                complexity += 1
-                w += v_max
-                if w > length:
-                    break
-                else:
-                    u = 0
-                    v = 1
-                    v_max = 1
-            else:
-                v = 1
-    return complexity
+def lz_string(string):
+
+ d={} 
+ w = ''
+ i=1
+ for c in string: 
+  wc = w + c
+  if wc in d:
+   w = wc
+  else:
+   d[wc]=wc
+   w = c
+  i+=1
+ return len(d)
 
 #Takes a binary tensor and flattens it, passing the string to lz_string()
 def lz_complexity(dataset):
     string = ''
-    vector = dataset.flatten()
+    vector = dataset.ravel()
     length = len(vector)
     vector = vector.astype(dtype = np.int64)
     for i in range(length):
@@ -61,7 +46,7 @@ def lz_complexity(dataset):
 #Calculates the Shannon entropy of a binary tensor
 def source_entropy(dataset):
     import math
-    vector = dataset.flatten()
+    vector = dataset.ravel()
     length = len(vector)
     p_1 = sum(vector)/length 
     p_0 = 1 - p_1
